@@ -10,150 +10,252 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#07080f;--bg2:#0b0d18;--bg3:#0f1120;
-  --surface:#131525;--surface2:#181b2e;--surface3:#1e2238;
+  --bg:#05060f;--bg2:#080a18;--bg3:#0a0d1e;
+  --surface:#101228;--surface2:#151831;--surface3:#1a1e3a;
   --c1:#7c3aed;--c1l:#a78bfa;--c1ll:#ede9fe;
   --c2:#06b6d4;--c2l:#67e8f9;
   --c3:#f59e0b;--c3l:#fcd34d;
   --c4:#ec4899;--c4l:#f9a8d4;
   --c5:#10b981;--c5l:#6ee7b7;
   --text:#f0f2ff;--text2:#94a3b8;--text3:#4b5470;
-  --border:rgba(124,58,237,.15);--border2:rgba(124,58,237,.28);
-  --shadow:0 4px 24px rgba(0,0,0,.4);
-  --shadow2:0 16px 48px rgba(0,0,0,.6);
-  --glow:0 0 40px rgba(124,58,237,.18);
+  --border:rgba(124,58,237,.15);--border2:rgba(124,58,237,.3);
+  --shadow:0 4px 24px rgba(0,0,0,.45);
+  --shadow2:0 20px 60px rgba(0,0,0,.65);
+  --glow:0 0 50px rgba(124,58,237,.2);
 }
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}
+button{font-family:'Plus Jakarta Sans',sans-serif;cursor:none;border:none;background:none}
 
-/* CURSOR */
-.cur{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--c1l);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:screen}
-.cur-r{position:fixed;width:54px;height:54px;border-radius:50%;border:2px solid rgba(167,139,250,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s}
+/* ═══════════════════════════════════
+   CURSOR
+═══════════════════════════════════ */
+.cur{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--c1l);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:screen}
+.cur-r{position:fixed;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(167,139,250,.35);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s}
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:500;padding:1.1rem 3.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(7,8,15,.88);backdrop-filter:blur(28px);border-bottom:1px solid var(--border);transition:padding .3s}
+/* ═══════════════════════════════════
+   FLOATING BLOBS (background atmosphere)
+═══════════════════════════════════ */
+.blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.18;animation:blobMove 18s ease-in-out infinite}
+.blob1{width:600px;height:600px;background:radial-gradient(circle,var(--c1),transparent);top:-150px;left:-150px;animation-delay:0s}
+.blob2{width:500px;height:500px;background:radial-gradient(circle,var(--c2),transparent);top:30%;right:-100px;animation-delay:-6s}
+.blob3{width:400px;height:400px;background:radial-gradient(circle,var(--c4),transparent);bottom:-100px;left:30%;animation-delay:-12s}
+@keyframes blobMove{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-20px,50px) scale(.95)}}
+
+/* FLOATING PARTICLES */
+.fp{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fpart{position:absolute;border-radius:50%;animation:fpFloat linear infinite}
+@keyframes fpFloat{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+
+/* ═══════════════════════════════════
+   NAV
+═══════════════════════════════════ */
+nav{position:fixed;top:0;width:100%;z-index:500;padding:1.1rem 3.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(5,6,15,.85);backdrop-filter:blur(28px);border-bottom:1px solid var(--border);transition:padding .3s}
 .logo{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
-.logo .l1{color:var(--c1l)}
-.logo .l2{color:var(--c2l)}
+.logo .l1{color:var(--c1l)}.logo .l2{color:var(--c2l)}
 .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s;position:relative}
-.nav-links a:hover{color:var(--text)}
+.nav-links a{color:var(--text2);font-size:.875rem;font-weight:500;transition:color .2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:linear-gradient(90deg,var(--c1l),var(--c2));transition:width .3s}
+.nav-links a:hover{color:var(--text)}
 .nav-links a:hover::after{width:100%}
-.nav-hire{padding:.5rem 1.4rem!important;border-radius:50px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff!important;font-weight:700!important;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:opacity .2s,transform .2s,box-shadow .2s!important;border:none!important;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem}
+.nav-hire{padding:.5rem 1.4rem!important;border-radius:50px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff!important;font-weight:700!important;font-size:.875rem;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:opacity .2s,transform .2s,box-shadow .2s!important;cursor:none}
 .nav-hire::after{display:none!important}
 .nav-hire:hover{opacity:.88;transform:translateY(-2px)!important;box-shadow:0 8px 30px rgba(124,58,237,.55)!important}
+.ham{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
+.ham span{width:24px;height:2px;background:var(--text2);border-radius:2px;transition:.3s}
 
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:9rem 2rem 5rem;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 30%,rgba(124,58,237,.12),transparent),radial-gradient(ellipse 60% 50% at 80% 70%,rgba(6,182,212,.08),transparent);pointer-events:none}
-.star-field{position:absolute;inset:0;pointer-events:none}
-.eye{display:inline-flex;align-items:center;gap:8px;padding:.38rem 1rem;border-radius:50px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--c1l);margin-bottom:1.75rem;animation:fd .7s .1s both}
-.ed{width:7px;height:7px;border-radius:50%;background:var(--c5l);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
-.h-name{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,8.5vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;animation:fd .7s .2s both;margin-bottom:.55rem}
+/* ═══════════════════════════════════
+   HERO
+═══════════════════════════════════ */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:9rem 2rem 6rem;position:relative;overflow:hidden;z-index:1}
+.eye{display:inline-flex;align-items:center;gap:8px;padding:.38rem 1rem;border-radius:50px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.28);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--c1l);margin-bottom:1.75rem;animation:fd .7s .1s both}
+.ed{width:7px;height:7px;border-radius:50%;background:var(--c5l);animation:pulseD 2s infinite}
+@keyframes pulseD{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+.h-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,9vw,7.5rem);font-weight:800;line-height:.92;letter-spacing:-.045em;animation:fd .7s .2s both;margin-bottom:.6rem}
 .h-name .n1{display:block;color:var(--text)}
-.h-name .n2{display:block;background:linear-gradient(135deg,var(--c1l) 0%,var(--c2) 50%,var(--c4) 90%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h-name .n2{display:block;background:linear-gradient(135deg,var(--c1l) 0%,var(--c2) 50%,var(--c4) 95%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .h-role{font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);font-weight:600;animation:fd .7s .3s both;margin-bottom:.9rem}
-.h-college{display:inline-flex;align-items:center;gap:8px;padding:.38rem .9rem;border-radius:8px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);font-size:.8rem;color:var(--c2l);font-weight:500;margin-bottom:2rem;animation:fd .7s .38s both}
-.h-desc{max-width:560px;font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:2.75rem;animation:fd .7s .46s both;font-weight:300}
+.h-college{display:inline-flex;align-items:center;gap:8px;padding:.38rem .9rem;border-radius:8px;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.22);font-size:.8rem;color:var(--c2l);font-weight:500;margin-bottom:2rem;animation:fd .7s .38s both}
+.h-desc{max-width:560px;font-size:1.04rem;color:var(--text2);line-height:1.82;margin-bottom:2.75rem;animation:fd .7s .46s both;font-weight:300}
 .h-desc strong{color:var(--text);font-weight:700}
 .h-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fd .7s .54s both;margin-bottom:3.5rem}
-.btn-g{padding:.85rem 2rem;border-radius:50px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-weight:700;font-size:.92rem;text-decoration:none;box-shadow:0 6px 28px rgba(124,58,237,.35);transition:transform .2s,box-shadow .2s}
-.btn-g:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(124,58,237,.55)}
-.btn-o{padding:.85rem 2rem;border-radius:50px;border:1.5px solid var(--border2);background:transparent;color:var(--text);font-weight:500;font-size:.92rem;text-decoration:none;transition:all .2s}
+.btn-g{padding:.85rem 2rem;border-radius:50px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-weight:700;font-size:.92rem;box-shadow:0 6px 28px rgba(124,58,237,.38);transition:transform .2s,box-shadow .2s;cursor:none}
+.btn-g:hover{transform:translateY(-3px);box-shadow:0 10px 44px rgba(124,58,237,.6)}
+.btn-o{padding:.85rem 2rem;border-radius:50px;border:1.5px solid var(--border2);background:transparent;color:var(--text);font-weight:500;font-size:.92rem;transition:all .25s;cursor:none}
 .btn-o:hover{border-color:var(--c1l);color:var(--c1l);transform:translateY(-3px)}
 .h-chips{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:center;animation:fd .7s .62s both}
 .chip{padding:.3rem .9rem;border-radius:50px;font-size:.72rem;font-weight:600;letter-spacing:.03em}
-.c-pu{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);color:var(--c1l)}
-.c-cy{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.22);color:var(--c2l)}
-.c-am{background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.22);color:var(--c3l)}
-.c-pk{background:rgba(236,72,153,.09);border:1px solid rgba(236,72,153,.2);color:var(--c4l)}
-.c-gr{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:var(--c5l)}
-.scroll-h{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fd .8s 1s both}
-.scroll-t{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text3)}
-.scroll-l{width:1.5px;height:52px;background:linear-gradient(to bottom,var(--c1l),transparent);animation:sl 2s infinite}
-@keyframes sl{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-@keyframes fd{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+.c-pu{background:rgba(124,58,237,.13);border:1px solid rgba(124,58,237,.28);color:var(--c1l)}
+.c-cy{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.24);color:var(--c2l)}
+.c-am{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.24);color:var(--c3l)}
+.c-pk{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.22);color:var(--c4l)}
+.c-gr{background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.22);color:var(--c5l)}
 
-/* MARQUEE */
-.mq{overflow:hidden;padding:.85rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);position:relative;z-index:1}
-.mq-t{display:inline-block;white-space:nowrap;animation:marq 28s linear infinite}
-.mq-t span{display:inline-block;margin:0 1.4rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600}
-.mq-t .dot{color:var(--c1l)}
+/* HERO STAT STRIP */
+.hero-stats{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);width:100%;max-width:700px;margin-top:4rem;animation:fd .7s .72s both;border-radius:0}
+.hst{flex:1;padding:1.4rem 1rem;text-align:center;border-right:1px solid var(--border)}
+.hst:last-child{border-right:none}
+.hst-n{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-.04em;background:linear-gradient(135deg,var(--c1l),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hst-l{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:.15rem}
+
+.scroll-h{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fd .8s 1s both}
+.scroll-t{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text3)}
+.scroll-l{width:1.5px;height:48px;background:linear-gradient(to bottom,var(--c1l),transparent);animation:sl 2s infinite}
+@keyframes sl{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fd{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════
+   MARQUEE
+═══════════════════════════════════ */
+.mq{overflow:hidden;padding:.9rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);position:relative;z-index:1}
+.mq-t{display:inline-block;white-space:nowrap;animation:marq 32s linear infinite}
+.mq-t span{display:inline-block;margin:0 1.5rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600}
+.mq-t .dot{color:var(--c1l);margin:0 .3rem}
 @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* SECTION COMMONS */
+/* ═══════════════════════════════════
+   SECTION COMMONS
+═══════════════════════════════════ */
 section{position:relative;z-index:1}
-.si{max-width:1120px;margin:0 auto;padding:6rem 2rem}
+.si{max-width:1140px;margin:0 auto;padding:6rem 2rem}
 .sec-head{text-align:center;margin-bottom:3.5rem}
-.sl{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--c1l);display:inline-flex;align-items:center;gap:10px;margin-bottom:.65rem}
-.sl::before,.sl::after{content:'';width:26px;height:1.5px;background:linear-gradient(90deg,var(--c1l),var(--c2))}
-.st{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.75rem;color:var(--text)}
+.sl{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c1l);display:inline-flex;align-items:center;gap:10px;margin-bottom:.65rem}
+.sl::before,.sl::after{content:'';width:28px;height:1.5px;background:linear-gradient(90deg,var(--c1l),var(--c2))}
+.st{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.75rem}
 .ss{color:var(--text2);font-size:.95rem;line-height:1.8;font-weight:300;max-width:560px;margin:0 auto}
-.rv{opacity:0;transform:translateY(26px);transition:opacity .75s,transform .75s}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s,transform .75s}
 .rv.vis{opacity:1;transform:none}
 .divl{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);position:relative;z-index:1}
 
-/* ABOUT */
-#about{background:var(--bg2)}
-.ag{display:grid;grid-template-columns:1fr 1.25fr;gap:5rem;align-items:center}
-.ab-p{color:var(--text2);line-height:1.85;font-size:.95rem;font-weight:300;margin-bottom:1rem}
+/* ═══════════════════════════════════
+   FLOATING DECORATIVE ELEMENTS
+═══════════════════════════════════ */
+.float-badge{
+  position:absolute;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:14px;padding:.8rem 1.1rem;
+  box-shadow:0 16px 48px rgba(0,0,0,.5),0 0 0 1px rgba(124,58,237,.05);
+  animation:floatUpDown 5s ease-in-out infinite;
+  pointer-events:none;z-index:2;
+  backdrop-filter:blur(10px);
+}
+.float-badge:nth-child(2){animation-delay:-2.5s}
+.float-badge:nth-child(3){animation-delay:-4s}
+@keyframes floatUpDown{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.fb-label{font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+.fb-val{font-size:.88rem;font-weight:700}
+.fb-val.cy{color:var(--c2l)}.fb-val.gr{color:var(--c5l)}.fb-val.pu{color:var(--c1l)}.fb-val.pk{color:var(--c4l)}
+
+/* ORBIT RING */
+.orbit-ring{
+  position:absolute;border-radius:50%;border:1px dashed rgba(124,58,237,.15);
+  animation:orbitSpin 25s linear infinite;pointer-events:none;
+}
+.orbit-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--c1l);top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--c1l)}
+
+/* ═══════════════════════════════════
+   ABOUT
+═══════════════════════════════════ */
+#about{background:var(--bg2);overflow:hidden}
+.ag{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:center;position:relative}
+.ab-p{color:var(--text2);line-height:1.88;font-size:.95rem;font-weight:300;margin-bottom:1rem}
 .ab-p strong{color:var(--text);font-weight:700}
-.ab-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.25rem}
-.zc{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.05));border:1px solid rgba(124,58,237,.2);border-radius:14px;padding:1.3rem 1.5rem;margin-top:1.5rem;display:flex;align-items:center;gap:.9rem;box-shadow:var(--glow)}
+.ab-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.2rem}
+.zc{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.06));border:1px solid rgba(124,58,237,.22);border-radius:16px;padding:1.3rem 1.5rem;margin-top:1.5rem;display:flex;align-items:center;gap:.9rem;box-shadow:var(--glow)}
 .zc-icon{font-size:1.9rem}
 .zc-name{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--c1l),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .zc-d{font-size:.78rem;color:var(--text2);margin-top:2px}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.sc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center;transition:all .3s;box-shadow:var(--shadow)}
-.sc:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--border2)}
-.sn{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;margin-bottom:.2rem}
-.sl2{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em}
-.gh-card{margin-top:.9rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+
+/* RIGHT COLUMN - creative card layout */
+.about-right-stack{position:relative;display:flex;flex-direction:column;gap:1rem}
+.about-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.5rem}
+.asc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.3rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.asc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0}
+.asc.a1::before{background:linear-gradient(90deg,var(--c1),var(--c1l))}
+.asc.a2::before{background:linear-gradient(90deg,var(--c2),var(--c2l))}
+.asc.a3::before{background:linear-gradient(90deg,var(--c3),var(--c3l))}
+.asc.a4::before{background:linear-gradient(90deg,var(--c4),var(--c4l))}
+.asc:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--border2)}
+.asc-n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:.2rem}
+.asc-l{font-size:.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em}
+.gh-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.3rem;transition:all .3s}
+.gh-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:var(--shadow2)}
 .gh-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.75rem}
-.gh-name{font-size:.85rem;font-weight:700;color:var(--text)}
+.gh-name{font-size:.88rem;font-weight:700}
 .gh-url{font-size:.7rem;color:var(--text3)}
 
-/* WORKING */
-#working{background:var(--bg3)}
-.wi{max-width:1120px;margin:0 auto;padding:0 2rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center}
-.feat-list{list-style:none;margin-top:1.4rem;display:flex;flex-direction:column;gap:.65rem}
-.feat-list li{display:flex;align-items:center;gap:.7rem;font-size:.88rem;color:var(--text2);font-weight:300}
+/* ACTIVITY PULSE */
+.activity-card{background:var(--surface);border:1px solid rgba(16,185,129,.2);border-radius:14px;padding:1.1rem 1.3rem;display:flex;align-items:center;gap:.9rem}
+.act-dot{width:10px;height:10px;border-radius:50%;background:var(--c5l);flex-shrink:0;animation:pulseD 1.8s infinite;box-shadow:0 0 12px var(--c5)}
+.act-text{font-size:.82rem;color:var(--text2)}.act-text strong{color:var(--c5l)}
+
+/* ═══════════════════════════════════
+   WORKING (laptop section)
+═══════════════════════════════════ */
+#working{background:var(--bg3);overflow:hidden}
+.wi{max-width:1140px;margin:0 auto;padding:0 2rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.feat-list{list-style:none;margin-top:1.4rem;display:flex;flex-direction:column;gap:.7rem}
+.feat-list li{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--text2);font-weight:300;padding:.55rem .7rem;border-radius:9px;transition:background .25s}
+.feat-list li:hover{background:rgba(124,58,237,.06)}
 .fd2{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.desk-wrap{position:relative;height:280px;display:flex;justify-content:center;align-items:flex-end}
-.amb{position:absolute;width:280px;height:55px;background:rgba(124,58,237,.2);filter:blur(40px);bottom:-8px;border-radius:50%;left:50%;transform:translateX(-50%)}
-.lw{position:relative;width:270px;margin-bottom:6px}
-.lid{width:270px;height:172px;background:linear-gradient(180deg,#c8c8d8,#a0a0b8);border-radius:12px 12px 0 0;border:2px solid rgba(200,200,220,.5);position:relative;overflow:hidden;box-shadow:0 0 35px rgba(124,58,237,.25),0 0 60px rgba(200,200,255,.08)}
-.scr{position:absolute;inset:8px;background:#f0f2ff;border-radius:6px;overflow:hidden}
-.code-s{padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:.52rem;line-height:1.65;animation:csc 16s linear infinite;white-space:pre}
+
+/* LAPTOP MOCKUP */
+.desk-wrap{position:relative;height:320px;display:flex;justify-content:center;align-items:flex-end}
+.amb{position:absolute;width:320px;height:60px;background:rgba(124,58,237,.22);filter:blur(50px);bottom:-10px;border-radius:50%;left:50%;transform:translateX(-50%)}
+.lw{position:relative;width:300px;margin-bottom:6px}
+.lid{
+  width:300px;height:190px;
+  background:linear-gradient(160deg,#2a2a3e,#1a1a2e,#0f0f1e);
+  border-radius:14px 14px 0 0;
+  border:2px solid rgba(124,58,237,.3);
+  position:relative;overflow:hidden;
+  box-shadow:0 0 40px rgba(124,58,237,.3),0 0 80px rgba(6,182,212,.1),inset 0 0 30px rgba(0,0,0,.5)
+}
+/* screen glow */
+.lid::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(124,58,237,.08),transparent 65%);pointer-events:none;z-index:2}
+.scr{position:absolute;inset:8px;background:#060812;border-radius:8px;overflow:hidden;border:1px solid rgba(124,58,237,.15)}
+/* editor chrome */
+.scr-bar{display:flex;align-items:center;gap:5px;padding:6px 8px;background:#0d1020;border-bottom:1px solid rgba(255,255,255,.05)}
+.dot-r{width:7px;height:7px;border-radius:50%}
+.dot-r.red{background:#ff5f57}.dot-r.yel{background:#ffbd2e}.dot-r.grn{background:#28c840}
+.scr-title{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.45rem;color:rgba(255,255,255,.25);letter-spacing:.05em}
+.code-s{padding:7px 10px;font-family:'JetBrains Mono',monospace;font-size:.5rem;line-height:1.75;animation:csc 18s linear infinite;white-space:pre;color:#c8d0e8}
 @keyframes csc{0%{transform:translateY(0)}100%{transform:translateY(-55%)}}
-.kw{color:#7c3aed}.fn{color:#0891b2}.str{color:#059669}.cm{color:#9ca3af}.num{color:#d97706}.v{color:#1e1b4b}
-.kb{width:270px;height:11px;background:linear-gradient(180deg,#b0b0c8,#9090a8);border-radius:0 0 4px 4px}
-.base{width:270px;height:11px;background:linear-gradient(180deg,#a8a8c0,#8888a0);border-radius:0 0 8px 8px;position:relative}
-.base::after{content:'';position:absolute;width:55px;height:3.5px;background:rgba(255,255,255,.25);border-radius:2px;left:50%;transform:translateX(-50%);top:3.5px}
-.tc{display:inline-block;width:5px;height:10px;background:#7c3aed;animation:blink .8s infinite;margin-left:2px;border-radius:1px}
+.kw{color:#c792ea}.fn{color:#82aaff}.str{color:#c3e88d}.cm{color:#546e7a}.nu{color:#f78c6c}.v{color:#e8eaf0}
+.tc{display:inline-block;width:5px;height:10px;background:var(--c1l);animation:blink .85s infinite;margin-left:1px;border-radius:1px;vertical-align:middle}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.ds{width:350px;height:5px;background:linear-gradient(90deg,#1a1d35,#252848,#1a1d35);border-radius:3px;position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
-.mug{position:absolute;right:-18px;bottom:17px;width:30px}
-.mb{width:30px;height:32px;background:linear-gradient(135deg,#2d1f60,#1a1440);border-radius:4px 4px 7px 7px;border:1.5px solid rgba(124,58,237,.38);display:flex;align-items:center;justify-content:center;font-size:12px}
-.mh{position:absolute;right:-9px;top:7px;width:10px;height:14px;border:2px solid rgba(124,58,237,.45);border-left:none;border-radius:0 6px 6px 0}
-.stm{position:absolute;bottom:64px;right:-10px;display:flex;gap:3px}
+/* line numbers */
+.line-nums{position:absolute;left:0;top:0;width:22px;padding:7px 0 7px 4px;background:#0a0e1c;font-family:'JetBrains Mono',monospace;font-size:.45rem;color:#2a3a5a;line-height:1.75;border-right:1px solid rgba(255,255,255,.04);animation:csc 18s linear infinite;white-space:pre}
+.code-body{position:absolute;left:22px;right:0;top:0;bottom:0;overflow:hidden}
+
+.kb{width:300px;height:12px;background:linear-gradient(180deg,#1e2030,#151728);border-radius:0 0 5px 5px;border:1px solid rgba(124,58,237,.15);border-top:none}
+.base{width:300px;height:10px;background:linear-gradient(180deg,#12141f,#0e1018);border-radius:0 0 8px 8px;position:relative}
+.base::after{content:'';position:absolute;width:60px;height:3.5px;background:rgba(124,58,237,.25);border-radius:2px;left:50%;transform:translateX(-50%);top:3px}
+.ds{width:380px;height:5px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.12),transparent);border-radius:3px;position:absolute;bottom:0;left:50%;transform:translateX(-50%)}
+
+/* mug and plant */
+.mug{position:absolute;right:-24px;bottom:18px;width:32px}
+.mb{width:32px;height:34px;background:linear-gradient(135deg,#2d1f60,#1a1440);border-radius:5px 5px 8px 8px;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:13px}
+.mh{position:absolute;right:-10px;top:7px;width:11px;height:15px;border:2px solid rgba(124,58,237,.45);border-left:none;border-radius:0 7px 7px 0}
+.stm{position:absolute;bottom:68px;right:-12px;display:flex;gap:3px}
 .sl3{width:1.5px;height:10px;background:linear-gradient(to top,rgba(167,139,250,.35),transparent);border-radius:2px;animation:stm 2.2s infinite ease-in-out}
 .sl3:nth-child(2){animation-delay:.4s;height:7px}
 .sl3:nth-child(3){animation-delay:.8s;height:9px}
 @keyframes stm{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-8px);opacity:0}}
-.plant{position:absolute;left:-22px;bottom:0}
+.plant{position:absolute;left:-28px;bottom:0}
 .pot{width:26px;height:20px;background:linear-gradient(180deg,#7c3020,#5a2010);border-radius:2px 2px 7px 7px;position:relative}
 .pot::before{content:'';position:absolute;top:-4px;left:-2px;width:30px;height:5px;background:#6a2808;border-radius:2px}
-.leaf{position:absolute;bottom:18px;background:#15532c;border-radius:50% 0;transform-origin:bottom center}
-.lf1{width:15px;height:20px;left:50%;transform:translateX(-85%) rotate(-28deg)}
-.lf2{width:13px;height:18px;left:50%;transform:translateX(-5%) rotate(18deg)}
-.lf3{width:11px;height:16px;left:50%;transform:translateX(-50%) rotate(-4deg)}
+.leaf{position:absolute;bottom:18px;background:#15532c;border-radius:50% 0}
+.lf1{width:16px;height:22px;left:50%;transform:translateX(-85%) rotate(-30deg)}
+.lf2{width:14px;height:19px;left:50%;transform:translateX(-5%) rotate(20deg)}
+.lf3{width:12px;height:17px;left:50%;transform:translateX(-50%) rotate(-5deg)}
 
-/* PROJECTS */
+/* ═══════════════════════════════════
+   PROJECTS
+═══════════════════════════════════ */
 #projects{background:var(--bg2)}
-.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.25rem}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.3rem}
 .pc{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.9rem;transition:all .35s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .pc::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;transform:scaleX(0);transform-origin:left;transition:transform .4s;border-radius:2px 2px 0 0}
 .pc.p1::after{background:linear-gradient(90deg,var(--c1),var(--c1l))}
@@ -165,36 +267,40 @@ section{position:relative;z-index:1}
 .pc:hover::after{transform:scaleX(1)}
 .pt2{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.1rem}
 .pi{font-size:2.2rem;line-height:1}
-.pb{padding:.22rem .7rem;border-radius:50px;font-size:.65rem;font-weight:700;letter-spacing:.04em}
+.pb{padding:.22rem .7rem;border-radius:50px;font-size:.63rem;font-weight:700;letter-spacing:.04em}
 .b-live{background:rgba(16,185,129,.12);color:var(--c5l);border:1px solid rgba(16,185,129,.25)}
 .b-build{background:rgba(124,58,237,.12);color:var(--c1l);border:1px solid rgba(124,58,237,.25)}
-.b-lab{background:rgba(245,158,11,.09);color:var(--c3l);border:1px solid rgba(245,158,11,.22)}
-.pti{font-family:'Syne',sans-serif;font-size:1.18rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.55rem;color:var(--text)}
-.pd{font-size:.85rem;color:var(--text2);line-height:1.75;margin-bottom:1.25rem;font-weight:300}
+.b-lab{background:rgba(245,158,11,.1);color:var(--c3l);border:1px solid rgba(245,158,11,.22)}
+.pti{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
+.pd{font-size:.84rem;color:var(--text2);line-height:1.78;margin-bottom:1.2rem;font-weight:300}
 .ps{display:flex;flex-wrap:wrap;gap:.35rem}
-.st2{padding:.18rem .6rem;border-radius:5px;font-size:.67rem;font-family:'JetBrains Mono',monospace;background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
-.pl{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.78rem;color:var(--c1l);text-decoration:none;font-weight:700;transition:gap .2s}
+.st2{padding:.18rem .6rem;border-radius:5px;font-size:.66rem;font-family:'JetBrains Mono',monospace;background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
+.pl{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.78rem;color:var(--c1l);font-weight:700;transition:gap .2s}
 .pl:hover{gap:.65rem}
 
-/* CLIENTS */
+/* ═══════════════════════════════════
+   CLIENTS / TESTIMONIALS
+═══════════════════════════════════ */
 #clients{background:var(--bg3)}
-.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.1rem}
-.cc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.6rem;transition:all .3s;position:relative;box-shadow:var(--shadow)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.2rem}
+.cc{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.7rem;transition:all .3s;position:relative;box-shadow:var(--shadow)}
 .cc:hover{border-color:var(--border2);transform:translateY(-5px);box-shadow:var(--shadow2)}
-.qm{font-family:'Syne',sans-serif;font-size:3.5rem;line-height:1;color:var(--c1l);opacity:.2;position:absolute;top:.9rem;right:1.25rem}
-.ct{font-size:.875rem;color:var(--text2);line-height:1.8;font-weight:300;margin-bottom:1.25rem;font-style:italic}
+.qm{font-family:'Syne',sans-serif;font-size:3.5rem;line-height:1;color:var(--c1l);opacity:.22;position:absolute;top:.9rem;right:1.2rem;font-weight:800}
+.ct{font-size:.87rem;color:var(--text2);line-height:1.82;font-weight:300;margin-bottom:1.25rem;font-style:italic}
 .ct strong{color:var(--text);font-weight:700;font-style:normal}
 .cf{display:flex;align-items:center;gap:.8rem}
 .ca{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;flex-shrink:0}
-.cn{font-weight:700;font-size:.875rem;color:var(--text)}
-.cr2{font-size:.75rem;color:var(--text3);margin-top:2px}
-.stars{display:flex;gap:1.5px;margin-top:.4rem}
-.star{color:var(--c3);font-size:.85rem}
+.cn{font-weight:700;font-size:.87rem}
+.cr2{font-size:.73rem;color:var(--text3);margin-top:2px}
+.stars{display:flex;gap:2px;margin-top:.4rem}
+.star{color:var(--c3);font-size:.82rem}
 
-/* SKILLS */
+/* ═══════════════════════════════════
+   SKILLS
+═══════════════════════════════════ */
 #skills{background:var(--bg2)}
 .skg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem}
-.skc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.6rem;transition:all .3s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.skc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.7rem;transition:all .3s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .skc::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:2px 2px 0 0;transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .sk1::after{background:linear-gradient(90deg,var(--c1),var(--c1l))}
 .sk2::after{background:linear-gradient(90deg,var(--c2),var(--c2l))}
@@ -203,110 +309,173 @@ section{position:relative;z-index:1}
 .sk5::after{background:linear-gradient(90deg,var(--c5),var(--c5l))}
 .skc:hover{border-color:var(--border2);transform:translateY(-5px);box-shadow:var(--shadow2)}
 .skc:hover::after{transform:scaleX(1)}
-.ski{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:.9rem}
-.skn{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:.35rem;color:var(--text)}
+.ski{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:.9rem}
+.skn{font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:800;margin-bottom:.35rem}
 .skd{font-size:.78rem;color:var(--text3);line-height:1.6;margin-bottom:.9rem}
 .br{height:4px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:.5rem}
-.bf{height:100%;border-radius:4px;width:0;transition:width 1.3s ease}
-.br-row{display:flex;justify-content:space-between;margin-bottom:.25rem}
+.bf{height:100%;border-radius:4px;width:0;transition:width 1.4s ease}
+.br-row{display:flex;justify-content:space-between;margin-bottom:.3rem}
 .br-l{font-size:.72rem;color:var(--text2);font-weight:500}
 .br-p{font-size:.68rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
 .skp{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.75rem}
-.sp{padding:.18rem .55rem;border-radius:50px;font-size:.67rem;background:var(--surface2);color:var(--text2);border:1px solid var(--border);font-weight:500}
+.sp{padding:.18rem .55rem;border-radius:50px;font-size:.66rem;background:var(--surface2);color:var(--text2);border:1px solid var(--border);font-weight:500}
 
-/* SHOOTING STARS */
-.shooting-stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.shoot{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:0}
-.shoot::after{content:'';position:absolute;top:50%;right:0;width:80px;height:1px;background:linear-gradient(to left,rgba(255,255,255,.8),transparent);transform:translateY(-50%)}
-
-/* CONTACT horizontal icons like photo 1 */
-#contact{background:var(--bg3)}
-.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:0}
-.contact-left .av-b{display:inline-flex;align-items:center;gap:.55rem;padding:.5rem 1.1rem;border-radius:50px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);font-size:.78rem;color:var(--c5l);font-weight:600;margin-bottom:1.5rem}
-.av-d{width:7px;height:7px;border-radius:50%;background:var(--c5l);animation:pulse 2s infinite}
-.contact-left p{color:var(--text2);font-size:.95rem;line-height:1.85;font-weight:300;margin-bottom:1rem}
+/* ═══════════════════════════════════
+   CONTACT
+═══════════════════════════════════ */
+#contact{background:var(--bg3);position:relative;overflow:hidden}
+.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(124,58,237,.07),transparent 65%);pointer-events:none}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.contact-left .av-b{display:inline-flex;align-items:center;gap:.55rem;padding:.48rem 1.1rem;border-radius:50px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);font-size:.78rem;color:var(--c5l);font-weight:600;margin-bottom:1.5rem}
+.av-d{width:7px;height:7px;border-radius:50%;background:var(--c5l);animation:pulseD 2s infinite}
+.contact-left p{color:var(--text2);font-size:.95rem;line-height:1.88;font-weight:300;margin-bottom:1rem}
 .contact-left p strong{color:var(--text);font-weight:700}
 .contact-tagline{color:var(--c1l)!important;font-weight:700!important;font-style:italic;font-size:1rem!important;margin-top:1.5rem!important}
-/* RIGHT side - connect with me horizontal */
-.connect-right{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center}
-.connect-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text3);font-weight:600;margin-bottom:1.25rem}
+.connect-right{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem}
+.connect-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text3);font-weight:600}
 .icon-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
-.ic-box{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-decoration:none;background:var(--surface);border:1.5px solid var(--border);box-shadow:var(--shadow);transition:all .25s;position:relative}
+.ic-box{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1.5px solid var(--border);box-shadow:var(--shadow);transition:all .25s;position:relative;cursor:none}
 .ic-box svg{width:24px;height:24px}
-.ic-box:hover{transform:translateY(-5px) scale(1.08);box-shadow:0 12px 36px rgba(0,0,0,.5);border-color:var(--border2)}
-.ic-tip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);background:var(--surface2);color:var(--text2);font-size:.62rem;font-weight:600;padding:.2rem .55rem;border-radius:5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;border:1px solid var(--border)}
+.ic-box:hover{transform:translateY(-6px) scale(1.1);box-shadow:0 14px 40px rgba(0,0,0,.55);border-color:var(--border2)}
+.ic-tip{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);background:var(--surface2);color:var(--text2);font-size:.62rem;font-weight:600;padding:.22rem .55rem;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;border:1px solid var(--border)}
 .ic-box:hover .ic-tip{opacity:1}
-.ic-box.ib-em:hover{border-color:var(--c1l);background:rgba(124,58,237,.08)}
-.ic-box.ib-co:hover{border-color:var(--c2l);background:rgba(6,182,212,.08)}
+.ic-box.ib-em:hover{border-color:var(--c1l);background:rgba(124,58,237,.1)}
+.ic-box.ib-co:hover{border-color:var(--c2l);background:rgba(6,182,212,.09)}
 .ic-box.ib-li:hover{border-color:#0a66c2;background:rgba(10,102,194,.1)}
 .ic-box.ib-gh:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.05)}
-.ic-box.ib-ig:hover{border-color:#e1306c;background:rgba(225,48,108,.08)}
-.ic-box.ib-fb:hover{border-color:#1877f2;background:rgba(24,119,242,.08)}
+.ic-box.ib-ig:hover{border-color:#e1306c;background:rgba(225,48,108,.09)}
+.ic-box.ib-fb:hover{border-color:#1877f2;background:rgba(24,119,242,.09)}
 
-/* TAGLINE */
-.tband{padding:3.25rem 2rem;text-align:center;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1;overflow:hidden}
-.tband::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(124,58,237,.08),transparent 65%);pointer-events:none}
-.tband-t{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3.8vw,2.5rem);font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,var(--c1l),var(--c2),var(--c4l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* BIG CTA */
+.cta-big{display:inline-flex;align-items:center;gap:.8rem;padding:1rem 2.4rem;border-radius:50px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-weight:700;font-size:1rem;box-shadow:0 8px 32px rgba(124,58,237,.4);transition:transform .2s,box-shadow .2s;cursor:none;margin-top:1.5rem}
+.cta-big:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(124,58,237,.6)}
+
+/* ═══════════════════════════════════
+   TAGLINE BAND
+═══════════════════════════════════ */
+.tband{padding:3.5rem 2rem;text-align:center;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1;overflow:hidden}
+.tband::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(124,58,237,.07),transparent 65%);pointer-events:none}
+.tband-t{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3.8vw,2.6rem);font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,var(--c1l),var(--c2),var(--c4l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tband-sub{margin-top:.5rem;font-size:.85rem;color:var(--text2);font-weight:500}
 
-/* FOOTER */
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
 footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
-.fl{font-size:.8rem;color:var(--text3)}
-.fl span{color:var(--c1l);font-weight:700}
-.fr{font-size:.75rem;color:var(--text3)}
+.fl{font-size:.8rem;color:var(--text3)}.fl span{color:var(--c1l);font-weight:700}
+.fr{font-size:.74rem;color:var(--text3)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:.74rem;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--c1l)}
 
-/* ══════════════════════════════════════
-   POPUP / MODAL — Hire Me
-══════════════════════════════════════ */
-.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+/* ═══════════════════════════════════
+   POPUP / HIRE ME MODAL
+═══════════════════════════════════ */
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
 .popup-overlay.open{opacity:1;pointer-events:all}
-.popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:2.5rem;width:100%;max-width:500px;box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 60px rgba(124,58,237,.2);transform:translateY(30px) scale(.96);transition:transform .35s,opacity .35s;position:relative}
+.popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:2.6rem;width:100%;max-width:500px;box-shadow:0 28px 80px rgba(0,0,0,.75),0 0 60px rgba(124,58,237,.22);transform:translateY(30px) scale(.96);transition:transform .35s,opacity .35s;position:relative;overflow:hidden}
+.popup-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c4))}
 .popup-overlay.open .popup-box{transform:translateY(0) scale(1)}
-.popup-close{position:absolute;top:1.25rem;right:1.25rem;width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:sans-serif;line-height:1}
+.popup-close{position:absolute;top:1.25rem;right:1.25rem;width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:1.05rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:sans-serif;line-height:1}
 .popup-close:hover{background:var(--surface3);color:var(--text);border-color:var(--border2)}
-.popup-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:.35rem}
-.popup-sub{font-size:.85rem;color:var(--text2);margin-bottom:1.75rem;line-height:1.6}
-.msg-field{width:100%;padding:.82rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:var(--text);background:var(--surface2);outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:.8rem;resize:none}
+.popup-title{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;margin-bottom:.35rem}
+.popup-sub{font-size:.84rem;color:var(--text2);margin-bottom:1.75rem;line-height:1.6}
+.msg-field{width:100%;padding:.82rem 1rem;border:1.5px solid var(--border);border-radius:11px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:var(--text);background:var(--surface2);outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:.8rem;resize:none;cursor:none}
 .msg-field::placeholder{color:var(--text3)}
 .msg-field:focus{border-color:var(--c1l);box-shadow:0 0 0 3px rgba(124,58,237,.12)}
-.msg-btn{width:100%;padding:.9rem;border-radius:10px;background:linear-gradient(135deg,var(--c1),var(--c2));color:white;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:opacity .2s,transform .2s;box-shadow:0 6px 24px rgba(124,58,237,.35)}
+.msg-btn{width:100%;padding:.92rem;border-radius:12px;background:linear-gradient(135deg,var(--c1),var(--c2));color:white;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;cursor:none;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:opacity .2s,transform .2s;box-shadow:0 6px 24px rgba(124,58,237,.38)}
 .msg-btn:hover{opacity:.88;transform:translateY(-2px)}
-.msg-ok{display:none;text-align:center;padding:.85rem;border-radius:10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);color:var(--c5l);font-weight:600;font-size:.88rem;margin-top:.75rem}
+.msg-ok{display:none;text-align:center;padding:.85rem;border-radius:10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);color:var(--c5l);font-weight:700;font-size:.88rem;margin-top:.75rem}
 
-@media(max-width:860px){
-  nav{padding:1rem 1.5rem}.nav-links{display:none}
+/* ═══════════════════════════════════
+   MOBILE MENU
+═══════════════════════════════════ */
+.mob-menu{position:fixed;top:0;right:-100%;width:min(300px,80vw);height:100vh;background:var(--surface);border-left:1px solid var(--border2);z-index:600;padding:5rem 2rem 2rem;transition:right .35s cubic-bezier(.25,1,.5,1);display:flex;flex-direction:column;gap:1.5rem}
+.mob-menu.open{right:0}
+.mob-menu a{font-size:1.1rem;font-weight:600;color:var(--text2);transition:color .2s}
+.mob-menu a:hover{color:var(--c1l)}
+.mob-close{position:absolute;top:1.2rem;right:1.2rem;width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:1.1rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:599;opacity:0;pointer-events:none;transition:opacity .3s}
+.mob-overlay.open{opacity:1;pointer-events:all}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════ */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .ham{display:flex}
   .ag,.wi,.contact-wrap{grid-template-columns:1fr;gap:2.5rem}
-  .desk-wrap{display:none}
+  .desk-wrap{height:260px}
+  .lid{width:240px;height:152px}.kb,.base,.ds{width:240px}
+  .amb{width:240px}
   footer{padding:1.5rem;flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
   .si{padding:4rem 1.25rem}
+  .hero-stats{max-width:100%}
+}
+@media(max-width:600px){
+  .pg{grid-template-columns:1fr}
+  .cg{grid-template-columns:1fr}
+  .skg{grid-template-columns:1fr}
+  .about-stat-grid{grid-template-columns:1fr 1fr}
+  #hero{padding:8rem 1.25rem 5rem}
+  .h-name{font-size:clamp(2.8rem,12vw,5rem)}
+  .hst-n{font-size:1.4rem}
 }
 </style>
 </head>
 <body>
 
+<!-- BACKGROUND ATMOSPHERE -->
+<div class="blobs">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+</div>
+
+<!-- FLOATING PARTICLES (injected by JS) -->
+<div class="fp" id="fp"></div>
+
+<!-- CURSOR -->
 <div class="cur" id="cur"></div>
 <div class="cur-r" id="curR"></div>
-<canvas id="shootCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%"></canvas>
 
-<!-- POPUP MODAL -->
+<!-- SHOOTING STARS CANVAS -->
+<canvas id="starCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%"></canvas>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mob-overlay" id="mobOverlay" onclick="closeMob()"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#working" onclick="closeMob()">My Work</a>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#clients" onclick="closeMob()">Testimonials</a>
+  <a href="#skills" onclick="closeMob()">Skills</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <button class="nav-hire" style="margin-top:1rem;width:100%;border-radius:12px;padding:.85rem" onclick="openPopup();closeMob()">Hire Me 🚀</button>
+</div>
+
+<!-- HIRE ME POPUP -->
 <div class="popup-overlay" id="popup">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup()">✕</button>
     <div class="popup-title">Let's Work Together 🚀</div>
-    <div class="popup-sub">Send me a message and I'll get back to you as soon as possible.</div>
-    <input class="msg-field" type="text" id="mName" placeholder="Your Name"/>
-    <input class="msg-field" type="email" id="mEmail" placeholder="Your Email"/>
-    <input class="msg-field" type="text" id="mSubject" placeholder="Subject"/>
-    <textarea class="msg-field" id="mMsg" rows="4" placeholder="Your Message..."></textarea>
+    <div class="popup-sub">Fill in the form below and your message goes directly to Gorick's inbox.</div>
+    <input class="msg-field" type="text" id="mName" placeholder="Your Full Name"/>
+    <input class="msg-field" type="email" id="mEmail" placeholder="Your Email Address"/>
+    <input class="msg-field" type="text" id="mSubject" placeholder="Subject (e.g. AI Project, Internship)"/>
+    <textarea class="msg-field" id="mMsg" rows="4" placeholder="Tell me about your project or opportunity..."></textarea>
     <button class="msg-btn" onclick="sendMsg()">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       Send Message
     </button>
-    <div class="msg-ok" id="msgOk">✅ Message sent! Gorick will get back to you soon.</div>
+    <div class="msg-ok" id="msgOk">✅ Opening your email client… Gorick will receive your message!</div>
   </div>
 </div>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav id="nav">
   <div class="logo"><span class="l1">Gorick</span> <span class="l2">Nath</span></div>
   <ul class="nav-links">
@@ -317,11 +486,13 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3
     <li><a href="#skills">Skills</a></li>
     <li><button class="nav-hire" onclick="openPopup()">Hire Me</button></li>
   </ul>
+  <button class="ham" id="ham" onclick="openMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section id="hero">
-  <div class="hero-bg"></div>
   <div class="eye"><div class="ed"></div>Open to Opportunities &amp; Collaborations</div>
   <h1 class="h-name">
     <span class="n1">Gorick Nath</span>
@@ -335,7 +506,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3
   <p class="h-desc">I am passionate about <strong>Artificial Intelligence and Machine Learning</strong>. A Computing Science student by day and founder of <strong>Zyntho AI</strong> by night — learning, building, and growing every single day.</p>
   <div class="h-btns">
     <a href="#projects" class="btn-g">View My Projects</a>
-    <a href="#contact" class="btn-o">Get In Touch →</a>
+    <button class="btn-o" onclick="openPopup()">Get In Touch →</button>
   </div>
   <div class="h-chips">
     <span class="chip c-pu">Machine Learning</span>
@@ -344,84 +515,142 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3
     <span class="chip c-pk">NLP</span>
     <span class="chip c-gr">Founder @ Zyntho AI</span>
   </div>
+  <div class="hero-stats">
+    <div class="hst"><span class="hst-n">6+</span><span class="hst-l">Projects Built</span></div>
+    <div class="hst"><span class="hst-n">94.7%</span><span class="hst-l">Model Accuracy</span></div>
+    <div class="hst"><span class="hst-n">15hr+</span><span class="hst-l">Weekly Saved</span></div>
+    <div class="hst"><span class="hst-n">∞</span><span class="hst-l">Ideas Building</span></div>
+  </div>
   <div class="scroll-h"><span class="scroll-t">Scroll</span><div class="scroll-l"></div></div>
 </section>
 
 <!-- MARQUEE -->
 <div class="mq"><div class="mq-t">
-  <span>Python</span><span class="dot">✦</span><span>TensorFlow</span><span class="dot">✦</span><span>PyTorch</span><span class="dot">✦</span><span>Machine Learning</span><span class="dot">✦</span><span>Deep Learning</span><span class="dot">✦</span><span>NLP</span><span class="dot">✦</span><span>Computer Vision</span><span class="dot">✦</span><span>Zyntho AI</span><span class="dot">✦</span><span>Griffith College Dublin</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Neural Networks</span><span class="dot">✦</span><span>Data Science</span><span class="dot">✦</span>
-  <span>Python</span><span class="dot">✦</span><span>TensorFlow</span><span class="dot">✦</span><span>PyTorch</span><span class="dot">✦</span><span>Machine Learning</span><span class="dot">✦</span><span>Deep Learning</span><span class="dot">✦</span><span>NLP</span><span class="dot">✦</span><span>Computer Vision</span><span class="dot">✦</span><span>Zyntho AI</span><span class="dot">✦</span><span>Griffith College Dublin</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Neural Networks</span><span class="dot">✦</span><span>Data Science</span><span class="dot">✦</span>
+  <span>Python</span><span class="dot">✦</span><span>TensorFlow</span><span class="dot">✦</span><span>PyTorch</span><span class="dot">✦</span><span>Machine Learning</span><span class="dot">✦</span><span>Deep Learning</span><span class="dot">✦</span><span>NLP</span><span class="dot">✦</span><span>Computer Vision</span><span class="dot">✦</span><span>Zyntho AI</span><span class="dot">✦</span><span>Griffith College Dublin</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Neural Networks</span><span class="dot">✦</span><span>Data Science</span><span class="dot">✦</span><span>LangChain</span><span class="dot">✦</span><span>YOLOv8</span><span class="dot">✦</span>
+  <span>Python</span><span class="dot">✦</span><span>TensorFlow</span><span class="dot">✦</span><span>PyTorch</span><span class="dot">✦</span><span>Machine Learning</span><span class="dot">✦</span><span>Deep Learning</span><span class="dot">✦</span><span>NLP</span><span class="dot">✦</span><span>Computer Vision</span><span class="dot">✦</span><span>Zyntho AI</span><span class="dot">✦</span><span>Griffith College Dublin</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Neural Networks</span><span class="dot">✦</span><span>Data Science</span><span class="dot">✦</span><span>LangChain</span><span class="dot">✦</span><span>YOLOv8</span><span class="dot">✦</span>
 </div></div>
 
-<!-- ABOUT -->
-<section id="about"><div class="si">
-  <div class="sec-head rv">
-    <p class="sl">Who I Am</p>
-    <h2 class="st">Learning, Building &amp; Growing Every Day</h2>
-    <p class="ss">From a student in Dublin to a founder in AI — this is my story so far.</p>
-  </div>
-  <div class="ag">
-    <div class="rv">
-      <p class="ab-p">I am <strong>Gorick Nath</strong>, a Computing Science student at <strong>Griffith College Dublin</strong>, Ireland. I have a deep passion for Artificial Intelligence and Machine Learning — not just as a subject to study, but as a craft to master.</p>
-      <p class="ab-p">As the <strong>Founder of Zyntho AI</strong>, I am learning by doing — building real AI tools and solutions that help businesses automate, analyse, and grow. Every project teaches me something new, and every challenge makes me better.</p>
-      <p class="ab-p">I am at the <strong>beginning of a long and exciting journey</strong> in AI. If you are a company, mentor, or collaborator who wants to work with someone driven, creative, and hungry to grow — I would love to connect.</p>
-      <div class="ab-tags">
-        <span class="chip c-pu">AI/ML</span><span class="chip c-cy">Python</span><span class="chip c-am">Data Science</span><span class="chip c-pk">NLP</span><span class="chip c-gr">Computer Vision</span><span class="chip c-pu">Deep Learning</span><span class="chip c-cy">Entrepreneurship</span>
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="si">
+    <div class="sec-head rv">
+      <p class="sl">Who I Am</p>
+      <h2 class="st">Learning, Building &amp; Growing Every Day</h2>
+      <p class="ss">From a student in Dublin to a founder in AI — this is my story so far.</p>
+    </div>
+    <div class="ag">
+      <!-- LEFT TEXT -->
+      <div class="rv">
+        <p class="ab-p">I am <strong>Gorick Nath</strong>, a Computing Science student at <strong>Griffith College Dublin</strong>, Ireland. I have a deep passion for Artificial Intelligence and Machine Learning — not just as a subject to study, but as a craft to master.</p>
+        <p class="ab-p">As the <strong>Founder of Zyntho AI</strong>, I am learning by doing — building real AI tools and solutions that help businesses automate, analyse, and grow. Every project teaches me something new, and every challenge makes me better.</p>
+        <p class="ab-p">I am at the <strong>beginning of a long and exciting journey</strong> in AI. If you are a company, mentor, or collaborator who wants to work with someone driven, creative, and hungry to grow — I would love to connect.</p>
+        <div class="ab-tags">
+          <span class="chip c-pu">AI/ML</span><span class="chip c-cy">Python</span><span class="chip c-am">Data Science</span><span class="chip c-pk">NLP</span><span class="chip c-gr">Computer Vision</span><span class="chip c-pu">Deep Learning</span><span class="chip c-cy">Entrepreneurship</span>
+        </div>
+        <div class="zc">
+          <div class="zc-icon">⚡</div>
+          <div>
+            <div class="zc-name">Zyntho AI</div>
+            <div class="zc-d">Founder &amp; CEO · AI/ML Solutions Company · Dublin, Ireland</div>
+            <div class="zc-d" style="color:var(--c2l);margin-top:3px">zynthoai04@gmail.com</div>
+          </div>
+        </div>
       </div>
-      <div class="zc">
-        <div class="zc-icon">⚡</div>
-        <div>
-          <div class="zc-name">Zyntho AI</div>
-          <div class="zc-d">Founder &amp; CEO · AI/ML Solutions Company · Dublin, Ireland</div>
-          <div class="zc-d" style="color:var(--c2l);margin-top:3px">zynthoai04@gmail.com</div>
+      <!-- RIGHT CREATIVE CARD STACK -->
+      <div class="about-right-stack rv">
+        <!-- Floating decorative badges -->
+        <div class="float-badge" style="top:-20px;right:-15px">
+          <div class="fb-label">Status</div>
+          <div class="fb-val gr">● Available Now</div>
+        </div>
+        <div class="float-badge" style="top:110px;left:-20px">
+          <div class="fb-label">Based In</div>
+          <div class="fb-val cy">Dublin 🇮🇪</div>
+        </div>
+        <div class="activity-card" style="margin-bottom:.8rem">
+          <div class="act-dot"></div>
+          <div class="act-text">Currently <strong>building AI products</strong> at Zyntho AI</div>
+        </div>
+        <div class="about-stat-grid">
+          <div class="asc a1"><div class="asc-n" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI/ML</div><div class="asc-l">Primary Focus</div></div>
+          <div class="asc a2"><div class="asc-n" style="background:linear-gradient(135deg,#06b6d4,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">IRL</div><div class="asc-l">Based In</div></div>
+          <div class="asc a3"><div class="asc-n" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">CEO</div><div class="asc-l">Zyntho AI</div></div>
+          <div class="asc a4"><div class="asc-n" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">∞</div><div class="asc-l">Ideas Building</div></div>
+        </div>
+        <div class="gh-card">
+          <div style="font-size:.68rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;font-weight:600">GitHub Profile</div>
+          <div class="gh-row">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white" opacity=".85"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <div><div class="gh-name">gorickroot</div><div class="gh-url">github.com/gorickroot · Dublin, Ireland</div></div>
+          </div>
+          <a href="https://github.com/gorickroot" target="_blank" style="font-size:.78rem;color:var(--c1l);font-weight:700">View GitHub Profile →</a>
         </div>
       </div>
     </div>
-    <div class="rv">
-      <div class="sg">
-        <div class="sc"><div class="sn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI/ML</div><div class="sl2">Primary Focus</div></div>
-        <div class="sc"><div class="sn" style="background:linear-gradient(135deg,#06b6d4,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">IRL</div><div class="sl2">Based In</div></div>
-        <div class="sc"><div class="sn" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">CEO</div><div class="sl2">Zyntho AI</div></div>
-        <div class="sc"><div class="sn" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">∞</div><div class="sl2">Ideas Building</div></div>
-      </div>
-      <div class="gh-card">
-        <div style="font-size:.7rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;font-weight:600">GitHub Profile</div>
-        <div class="gh-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="white" opacity=".8"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <div><div class="gh-name">gorickroot</div><div class="gh-url">github.com/gorickroot · Dublin, Ireland</div></div>
-        </div>
-        <a href="https://github.com/gorickroot" target="_blank" style="font-size:.78rem;color:var(--c1l);text-decoration:none;font-weight:700">View GitHub Profile →</a>
-      </div>
-    </div>
   </div>
-</div></section>
+</section>
 
 <div class="divl"></div>
 
-<!-- WORKING -->
-<section id="working"><div class="si" style="padding-bottom:2rem">
-  <div class="sec-head rv">
-    <p class="sl">In Action</p>
-    <h2 class="st">How I Work &amp; What I Build</h2>
-    <p class="ss">Late nights, coffee, and thousands of lines of code — this is where ideas become reality.</p>
+<!-- ═══ WORKING ═══ -->
+<section id="working">
+  <div class="si" style="padding-bottom:2rem">
+    <div class="sec-head rv">
+      <p class="sl">In Action</p>
+      <h2 class="st">How I Work &amp; What I Build</h2>
+      <p class="ss">Late nights, coffee, and thousands of lines of code — this is where ideas become reality.</p>
+    </div>
   </div>
-</div>
-<div class="wi">
-  <div class="rv">
-    <p class="ab-p">From training neural networks to deploying APIs, I constantly push myself to learn the <strong>full AI development lifecycle</strong>. Every project is a chance to grow and create something that never existed before.</p>
-    <ul class="feat-list">
-      <li><span class="fd2" style="background:var(--c1l)"></span>Training and experimenting with neural networks and language models</li>
-      <li><span class="fd2" style="background:var(--c2l)"></span>Building computer vision pipelines for practical applications</li>
-      <li><span class="fd2" style="background:var(--c3l)"></span>Designing and deploying ML-powered APIs and automation tools</li>
-      <li><span class="fd2" style="background:var(--c4l)"></span>Exploring NLP and large language model fine-tuning techniques</li>
-      <li><span class="fd2" style="background:var(--c5l)"></span>Conducting AI research and assignments at Griffith College Dublin</li>
-    </ul>
-  </div>
-  <div class="desk-wrap rv">
-    <div class="amb"></div>
-    <div class="plant"><div class="leaf lf1"></div><div class="leaf lf2"></div><div class="leaf lf3"></div><div class="pot"></div></div>
-    <div class="lw">
-      <div class="lid"><div class="scr"><div class="code-s"><span class="cm"># Zyntho AI — Training</span>
+  <div class="wi">
+    <div class="rv">
+      <p class="ab-p">From training neural networks to deploying APIs, I constantly push myself to learn the <strong>full AI development lifecycle</strong>. Every project is a chance to grow and create something that never existed before.</p>
+      <ul class="feat-list">
+        <li><span class="fd2" style="background:var(--c1l)"></span>Training and experimenting with neural networks and language models</li>
+        <li><span class="fd2" style="background:var(--c2l)"></span>Building computer vision pipelines for practical applications</li>
+        <li><span class="fd2" style="background:var(--c3l)"></span>Designing and deploying ML-powered APIs and automation tools</li>
+        <li><span class="fd2" style="background:var(--c4l)"></span>Exploring NLP and large language model fine-tuning techniques</li>
+        <li><span class="fd2" style="background:var(--c5l)"></span>Conducting AI research and assignments at Griffith College Dublin</li>
+      </ul>
+    </div>
+    <!-- LAPTOP MOCKUP -->
+    <div class="desk-wrap rv">
+      <div class="amb"></div>
+      <div class="plant">
+        <div class="leaf lf1"></div><div class="leaf lf2"></div><div class="leaf lf3"></div>
+        <div class="pot"></div>
+      </div>
+      <div class="lw">
+        <div class="lid">
+          <div class="scr">
+            <div class="scr-bar">
+              <div class="dot-r red"></div><div class="dot-r yel"></div><div class="dot-r grn"></div>
+              <div class="scr-title">zyntho_model.py — Zyntho AI Training</div>
+            </div>
+            <div style="position:relative;flex:1;overflow:hidden;height:calc(100% - 24px)">
+              <div class="line-nums">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</div>
+              <div class="code-body">
+                <div class="code-s"><span class="cm"># Zyntho AI — Training</span>
 <span class="kw">import</span> <span class="v">torch</span>
 <span class="kw">import</span> <span class="v">torch.nn</span> <span class="kw">as</span> <span class="v">nn</span>
 <span class="kw">from</span> <span class="v">transformers</span> <span class="kw">import</span> <span class="fn">AutoModel</span>
@@ -430,148 +659,155 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3
   <span class="kw">def</span> <span class="fn">__init__</span><span class="v">(self, cfg):</span>
     <span class="v">super().__init__()</span>
     <span class="v">self.enc</span> = <span class="fn">AutoModel</span>
-    <span class="v">self.head</span> = <span class="v">nn.Linear(</span><span class="num">768</span><span class="v">,cfg.n)</span>
+    <span class="v">self.head</span> = <span class="v">nn.Linear(</span><span class="nu">768</span><span class="v">,cfg.n)</span>
   <span class="kw">def</span> <span class="fn">forward</span><span class="v">(self, x):</span>
     <span class="v">h</span> = <span class="v">self.enc(x).last</span>
     <span class="kw">return</span> <span class="v">self.head(h)</span>
 
 <span class="v">model</span> = <span class="fn">ZynthoAI</span><span class="v">(cfg).cuda()</span>
 <span class="v">optim</span> = <span class="v">torch.optim.AdamW(</span>
-  <span class="v">model.parameters(),lr=</span><span class="num">2e-5</span><span class="v">)</span>
+  <span class="v">model.parameters(),lr=</span><span class="nu">2e-5</span><span class="v">)</span>
 <span class="kw">for</span> <span class="v">ep</span> <span class="kw">in</span> <span class="fn">range</span><span class="v">(cfg.epochs):</span>
   <span class="kw">for</span> <span class="v">b</span> <span class="kw">in</span> <span class="v">loader:</span>
     <span class="v">loss</span>=<span class="v">model(**b)</span>
     <span class="v">loss.backward()</span>
     <span class="v">optim.step()</span>
-<span class="cm"># Acc: 94.7% ✓</span>
-<span class="v">&gt; </span><span class="tc"></span>
-</div></div></div>
-      <div class="kb"></div><div class="base"></div>
-    </div>
-    <div class="stm"><div class="sl3"></div><div class="sl3"></div><div class="sl3"></div></div>
-    <div class="mug"><div class="mb">☕</div><div class="mh"></div></div>
-    <div class="ds"></div>
-  </div>
+<span class="cm"># Acc: 94.7%</span> <span class="str">✓</span>
+<span class="v">&gt;</span><span class="tc"></span>
 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kb"></div>
+        <div class="base"></div>
+      </div>
+      <div class="stm"><div class="sl3"></div><div class="sl3"></div><div class="sl3"></div></div>
+      <div class="mug"><div class="mb">☕</div><div class="mh"></div></div>
+      <div class="ds"></div>
+    </div>
+  </div>
 </section>
 
 <div class="divl"></div>
 
-<!-- PROJECTS -->
-<section id="projects"><div class="si">
-  <div class="sec-head rv">
-    <p class="sl">What I've Built</p>
-    <h2 class="st">Projects &amp; Innovations</h2>
-    <p class="ss">AI systems I have designed, trained, and worked on — from language models to automation tools.</p>
-  </div>
-  <div class="pg">
-    <div class="pc p1 rv"><div class="pt2"><span class="pi">⚡</span><span class="pb b-live">Live</span></div><div class="pti">Zyntho AI Platform</div><p class="pd">An AI-as-a-service platform allowing businesses to integrate intelligent automation. Features custom NLP pipelines, document intelligence, and sentiment analysis APIs — built and maintained by me as founder.</p><div class="ps"><span class="st2">Python</span><span class="st2">FastAPI</span><span class="st2">PyTorch</span><span class="st2">HuggingFace</span><span class="st2">Docker</span></div><a href="https://github.com/gorickroot" target="_blank" class="pl">View on GitHub →</a></div>
-    <div class="pc p2 rv"><div class="pt2"><span class="pi">🧠</span><span class="pb b-build">In Progress</span></div><div class="pti">ZynthoBrain — LLM Fine-tuning</div><p class="pd">Fine-tuning a large language model on domain-specific data using parameter-efficient methods (LoRA). A deep-learning project pushing my understanding of modern NLP to a new level.</p><div class="ps"><span class="st2">Python</span><span class="st2">LoRA</span><span class="st2">LLaMA</span><span class="st2">PEFT</span><span class="st2">Transformers</span></div><a href="https://github.com/gorickroot/ZynthoBrain" target="_blank" class="pl">View on GitHub →</a></div>
-    <div class="pc p3 rv"><div class="pt2"><span class="pi">👁️</span><span class="pb b-build">Building</span></div><div class="pti">VisionFlow — CV Pipeline</div><p class="pd">A computer vision pipeline for real-time object detection and scene understanding using YOLOv8. Built to explore practical applications in retail and security industries.</p><div class="ps"><span class="st2">OpenCV</span><span class="st2">YOLOv8</span><span class="st2">PyTorch</span><span class="st2">ONNX</span><span class="st2">NumPy</span></div><a href="https://github.com/gorickroot/visionflow" target="_blank" class="pl">View on GitHub →</a></div>
-    <div class="pc p4 rv"><div class="pt2"><span class="pi">💬</span><span class="pb b-build">Building</span></div><div class="pti">SentimentLens — NLP Analyser</div><p class="pd">An NLP tool that classifies emotion, intent, and urgency in customer reviews and social media posts in real time — helping companies respond faster and make smarter decisions.</p><div class="ps"><span class="st2">BERT</span><span class="st2">spaCy</span><span class="st2">scikit-learn</span><span class="st2">NLTK</span><span class="st2">Flask</span></div><a href="https://github.com/gorickroot/Sentimentlens" target="_blank" class="pl">View on GitHub →</a></div>
-    <div class="pc p5 rv"><div class="pt2"><span class="pi">🤖</span><span class="pb b-build">Building</span></div><div class="pti">AutoAgent — AI Workflow Engine</div><p class="pd">A multi-step AI agent that breaks complex tasks into subtasks and executes them autonomously — integrating with APIs and external services like an intelligent digital employee.</p><div class="ps"><span class="st2">LangChain</span><span class="st2">OpenAI API</span><span class="st2">Python</span><span class="st2">Redis</span></div><a href="https://github.com/gorickroot" target="_blank" class="pl">View on GitHub →</a></div>
-    <div class="pc p1 rv"><div class="pt2"><span class="pi">📊</span><span class="pb b-lab">Academic</span></div><div class="pti">DataSense — Predictive Analytics</div><p class="pd">A machine learning–powered analytics dashboard built for Computing Science coursework at Griffith College Dublin. Uses ensemble methods with SHAP explanations for interpretable predictions.</p><div class="ps"><span class="st2">XGBoost</span><span class="st2">SHAP</span><span class="st2">Pandas</span><span class="st2">Plotly</span><span class="st2">Streamlit</span></div><a href="https://github.com/gorickroot/datasense-predictive-analytics-FIXED" target="_blank" class="pl">View on GitHub →</a></div>
-  </div>
-</div></section>
-
-<div class="divl"></div>
-
-<!-- CLIENTS -->
-<section id="clients"><div class="si">
-  <div class="sec-head rv">
-    <p class="sl">What People Say</p>
-    <h2 class="st">Client Testimonials</h2>
-    <p class="ss">From collaborators who have worked with me and seen the results first-hand.</p>
-  </div>
-  <div class="cg">
-    <div class="cc rv"><div class="qm">"</div><p class="ct">Working with Gorick was one of the best decisions we made. He built us an AI automation tool that saved our team <strong>over 15 hours of manual work every week</strong>. His technical ability is impressive for someone still in college — and he explains everything clearly. Highly recommend.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff">DC</div><div><div class="cn">Daniel Chen</div><div class="cr2">CEO, NovaTech Solutions — Dublin, Ireland</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
-    <div class="cc rv"><div class="qm">"</div><p class="ct">I hired Gorick to build a sentiment analysis system and the model achieved <strong>93% accuracy — delivered ahead of schedule</strong>. What stands out is his creativity. He proposed an approach we had never considered and it worked perfectly. Really impressive work.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#06b6d4,#67e8f9);color:#0a3040">SR</div><div><div class="cn">Samantha Reid</div><div class="cr2">Head of Operations, RetailIQ — London, UK</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
-    <div class="cc rv"><div class="qm">"</div><p class="ct">Gorick thinks like a <strong>product owner, not just a coder</strong>. He understood our goals instantly and delivered an AI solution that genuinely moved the needle. Intelligent, innovative, and incredibly dedicated — hire him before someone else does.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);color:#4a2800">AM</div><div><div class="cn">Arjun Mehta</div><div class="cr2">Founder, DataPulse AI — Bangalore, India</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
-    <div class="cc rv"><div class="qm">"</div><p class="ct">As a non-technical founder, I was nervous. Gorick made everything transparent and easy. He delivered a <strong>computer vision prototype that impressed our investors</strong> at our pitch day. Creative, professional, and brilliant — I would work with him again without hesitation.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);color:#4a0030">LM</div><div><div class="cn">Laura Murphy</div><div class="cr2">Co-founder, VisionVault — Dublin, Ireland</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
-  </div>
-</div></section>
-
-<div class="divl"></div>
-
-<!-- SKILLS -->
-<section id="skills"><div class="si">
-  <div class="sec-head rv">
-    <p class="sl">Expertise</p>
-    <h2 class="st">Skills &amp; Technologies</h2>
-    <p class="ss">The tools and techniques I use to bring AI ideas to life.</p>
-  </div>
-  <div class="skg">
-    <div class="skc sk1 rv"><div class="ski" style="background:rgba(124,58,237,.12)">🧠</div><div class="skn">Machine Learning</div><p class="skd">Supervised, unsupervised, and deep learning — from research to deployment.</p><div class="br-row"><span class="br-l">Deep Learning</span><span class="br-p">80%</span></div><div class="br"><div class="bf" data-w="80" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><div class="br-row"><span class="br-l">Model Training</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><div class="skp"><span class="sp">PyTorch</span><span class="sp">TensorFlow</span><span class="sp">Keras</span><span class="sp">scikit-learn</span></div></div>
-    <div class="skc sk2 rv"><div class="ski" style="background:rgba(6,182,212,.1)">💬</div><div class="skn">NLP &amp; LLMs</div><p class="skd">Transformers, language models, sentiment analysis, and fine-tuning with LoRA.</p><div class="br-row"><span class="br-l">Transformers / BERT</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#06b6d4,#67e8f9)"></div></div><div class="br-row"><span class="br-l">LLM Fine-tuning</span><span class="br-p">65%</span></div><div class="br"><div class="bf" data-w="65" style="background:linear-gradient(90deg,#06b6d4,#67e8f9)"></div></div><div class="skp"><span class="sp">HuggingFace</span><span class="sp">spaCy</span><span class="sp">NLTK</span><span class="sp">LangChain</span></div></div>
-    <div class="skc sk3 rv"><div class="ski" style="background:rgba(245,158,11,.09)">🐍</div><div class="skn">Python &amp; Data Science</div><p class="skd">Clean Python code for AI systems, data pipelines, and APIs.</p><div class="br-row"><span class="br-l">Python</span><span class="br-p">85%</span></div><div class="br"><div class="bf" data-w="85" style="background:linear-gradient(90deg,#f59e0b,#fcd34d)"></div></div><div class="br-row"><span class="br-l">Data Science</span><span class="br-p">78%</span></div><div class="br"><div class="bf" data-w="78" style="background:linear-gradient(90deg,#f59e0b,#fcd34d)"></div></div><div class="skp"><span class="sp">NumPy</span><span class="sp">Pandas</span><span class="sp">Matplotlib</span><span class="sp">FastAPI</span></div></div>
-    <div class="skc sk4 rv"><div class="ski" style="background:rgba(236,72,153,.09)">👁️</div><div class="skn">Computer Vision</div><p class="skd">Object detection, image classification, and visual AI systems.</p><div class="br-row"><span class="br-l">Object Detection</span><span class="br-p">70%</span></div><div class="br"><div class="bf" data-w="70" style="background:linear-gradient(90deg,#ec4899,#f9a8d4)"></div></div><div class="br-row"><span class="br-l">OpenCV / YOLO</span><span class="br-p">68%</span></div><div class="br"><div class="bf" data-w="68" style="background:linear-gradient(90deg,#ec4899,#f9a8d4)"></div></div><div class="skp"><span class="sp">OpenCV</span><span class="sp">YOLO</span><span class="sp">PIL</span><span class="sp">ONNX</span></div></div>
-    <div class="skc sk5 rv"><div class="ski" style="background:rgba(16,185,129,.09)">🚀</div><div class="skn">Entrepreneurship</div><p class="skd">Founding and running Zyntho AI — strategy, product thinking, and execution.</p><div class="br-row"><span class="br-l">Product Thinking</span><span class="br-p">80%</span></div><div class="br"><div class="bf" data-w="80" style="background:linear-gradient(90deg,#10b981,#6ee7b7)"></div></div><div class="br-row"><span class="br-l">Client Management</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#10b981,#6ee7b7)"></div></div><div class="skp"><span class="sp">Vision</span><span class="sp">Leadership</span><span class="sp">Innovation</span><span class="sp">Growth</span></div></div>
-  </div>
-</div></section>
-
-<div class="divl"></div>
-
-<!-- CONTACT — exactly like photo 2 -->
-<section id="contact"><div class="si">
-  <div class="sec-head rv">
-    <p class="sl">Get In Touch</p>
-    <h2 class="st">Let's Build Something<br>Incredible Together</h2>
-  </div>
-  <div class="contact-wrap">
-    <!-- LEFT -->
-    <div class="contact-left rv">
-      <div class="av-b"><div class="av-d"></div>Available for opportunities right now</div>
-      <p>Whether you are a <strong>company looking to integrate AI</strong>, an <strong>investor</strong> excited about intelligent systems, or a fellow developer who wants to collaborate — I am always open to a real conversation.</p>
-      <p>I am a Computing Science student at <strong>Griffith College Dublin</strong> and the CEO of <strong>Zyntho AI</strong>. I am open to internships, full-time roles, freelance AI projects, and strategic partnerships.</p>
-      <p>Let us make something the world has never seen before.</p>
-      <p class="contact-tagline">"Every line of code is a step forward."</p>
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="si">
+    <div class="sec-head rv">
+      <p class="sl">What I've Built</p>
+      <h2 class="st">Projects &amp; Innovations</h2>
+      <p class="ss">AI systems I have designed, trained, and worked on — from language models to automation tools.</p>
     </div>
-    <!-- RIGHT — horizontal icons like photo 1 -->
-    <div class="connect-right rv">
-      <div class="connect-label">Connect With Me</div>
-      <div class="icon-row">
+    <div class="pg">
+      <div class="pc p1 rv"><div class="pt2"><span class="pi">⚡</span><span class="pb b-live">Live</span></div><div class="pti">Zyntho AI Platform</div><p class="pd">An AI-as-a-service platform allowing businesses to integrate intelligent automation. Features custom NLP pipelines, document intelligence, and sentiment analysis APIs — built and maintained by me as founder.</p><div class="ps"><span class="st2">Python</span><span class="st2">FastAPI</span><span class="st2">PyTorch</span><span class="st2">HuggingFace</span><span class="st2">Docker</span></div><a href="https://github.com/gorickroot" target="_blank" class="pl">View on GitHub →</a></div>
+      <div class="pc p2 rv"><div class="pt2"><span class="pi">🧠</span><span class="pb b-build">In Progress</span></div><div class="pti">ZynthoBrain — LLM Fine-tuning</div><p class="pd">Fine-tuning a large language model on domain-specific data using parameter-efficient methods (LoRA). A deep-learning project pushing my understanding of modern NLP to a new level.</p><div class="ps"><span class="st2">Python</span><span class="st2">LoRA</span><span class="st2">LLaMA</span><span class="st2">PEFT</span><span class="st2">Transformers</span></div><a href="https://github.com/gorickroot" target="_blank" class="pl">View on GitHub →</a></div>
+      <div class="pc p3 rv"><div class="pt2"><span class="pi">👁️</span><span class="pb b-build">Building</span></div><div class="pti">VisionFlow — CV Pipeline</div><p class="pd">A computer vision pipeline for real-time object detection and scene understanding using YOLOv8. Built to explore practical applications in retail and security industries.</p><div class="ps"><span class="st2">OpenCV</span><span class="st2">YOLOv8</span><span class="st2">PyTorch</span><span class="st2">ONNX</span><span class="st2">NumPy</span></div><a href="https://github.com/gorickroot/visionflow" target="_blank" class="pl">View on GitHub →</a></div>
+      <div class="pc p4 rv"><div class="pt2"><span class="pi">💬</span><span class="pb b-build">Building</span></div><div class="pti">SentimentLens — NLP Analyser</div><p class="pd">An NLP tool that classifies emotion, intent, and urgency in customer reviews and social media posts in real time — helping companies respond faster and make smarter decisions.</p><div class="ps"><span class="st2">BERT</span><span class="st2">spaCy</span><span class="st2">scikit-learn</span><span class="st2">NLTK</span><span class="st2">Flask</span></div><a href="https://github.com/gorickroot/Sentimentlens" target="_blank" class="pl">View on GitHub →</a></div>
+      <div class="pc p5 rv"><div class="pt2"><span class="pi">🤖</span><span class="pb b-build">Building</span></div><div class="pti">AutoAgent — AI Workflow Engine</div><p class="pd">A multi-step AI agent that breaks complex tasks into subtasks and executes them autonomously — integrating with APIs and external services like an intelligent digital employee.</p><div class="ps"><span class="st2">LangChain</span><span class="st2">OpenAI API</span><span class="st2">Python</span><span class="st2">Redis</span></div><a href="https://github.com/gorickroot" target="_blank" class="pl">View on GitHub →</a></div>
+      <div class="pc p1 rv"><div class="pt2"><span class="pi">📊</span><span class="pb b-lab">Academic</span></div><div class="pti">DataSense — Predictive Analytics</div><p class="pd">A machine learning–powered analytics dashboard built for Computing Science coursework at Griffith College Dublin. Uses ensemble methods with SHAP explanations for interpretable predictions.</p><div class="ps"><span class="st2">XGBoost</span><span class="st2">SHAP</span><span class="st2">Pandas</span><span class="st2">Plotly</span><span class="st2">Streamlit</span></div><a href="https://github.com/gorickroot/datasense-predictive-analytics-FIXED" target="_blank" class="pl">View on GitHub →</a></div>
+    </div>
+  </div>
+</section>
 
-        <a href="mailto:sanandynathgorick@gmail.com" class="ic-box ib-em">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-          <div class="ic-tip">Personal Email</div>
-        </a>
+<div class="divl"></div>
 
-        <a href="mailto:zynthoai04@gmail.com" class="ic-box ib-co">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-          <div class="ic-tip">Zyntho AI Email</div>
-        </a>
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="clients">
+  <div class="si">
+    <div class="sec-head rv">
+      <p class="sl">What People Say</p>
+      <h2 class="st">Client Testimonials</h2>
+      <p class="ss">From collaborators who have worked with me and seen the results first-hand.</p>
+    </div>
+    <div class="cg">
+      <div class="cc rv"><div class="qm">"</div><p class="ct">Working with Gorick was one of the best decisions we made. He built us an AI automation tool that saved our team <strong>over 15 hours of manual work every week</strong>. His technical ability is impressive for someone still in college. Highly recommend.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff">DC</div><div><div class="cn">Daniel Chen</div><div class="cr2">CEO, NovaTech Solutions — Dublin, Ireland</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
+      <div class="cc rv"><div class="qm">"</div><p class="ct">I hired Gorick to build a sentiment analysis system and the model achieved <strong>93% accuracy — delivered ahead of schedule</strong>. What stands out is his creativity. He proposed an approach we had never considered and it worked perfectly.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#06b6d4,#67e8f9);color:#0a3040">SR</div><div><div class="cn">Samantha Reid</div><div class="cr2">Head of Operations, RetailIQ — London, UK</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
+      <div class="cc rv"><div class="qm">"</div><p class="ct">Gorick thinks like a <strong>product owner, not just a coder</strong>. He understood our goals instantly and delivered an AI solution that genuinely moved the needle. Intelligent, innovative, and incredibly dedicated — hire him before someone else does.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);color:#4a2800">AM</div><div><div class="cn">Arjun Mehta</div><div class="cr2">Founder, DataPulse AI — Bangalore, India</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
+      <div class="cc rv"><div class="qm">"</div><p class="ct">As a non-technical founder, I was nervous. Gorick made everything transparent and easy. He delivered a <strong>computer vision prototype that impressed our investors</strong> at our pitch day. Creative, professional, and brilliant.</p><div class="cf"><div class="ca" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);color:#4a0030">LM</div><div><div class="cn">Laura Murphy</div><div class="cr2">Co-founder, VisionVault — Dublin, Ireland</div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div></div>
+    </div>
+  </div>
+</section>
 
-        <a href="https://www.linkedin.com/in/gorick-nath-aigeek/" target="_blank" class="ic-box ib-li">
-          <svg viewBox="0 0 24 24" fill="#0a66c2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          <div class="ic-tip">LinkedIn</div>
-        </a>
+<div class="divl"></div>
 
-        <a href="https://github.com/gorickroot" target="_blank" class="ic-box ib-gh">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <div class="ic-tip">GitHub</div>
-        </a>
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="si">
+    <div class="sec-head rv">
+      <p class="sl">Expertise</p>
+      <h2 class="st">Skills &amp; Technologies</h2>
+      <p class="ss">The tools and techniques I use to bring AI ideas to life.</p>
+    </div>
+    <div class="skg">
+      <div class="skc sk1 rv"><div class="ski" style="background:rgba(124,58,237,.12)">🧠</div><div class="skn">Machine Learning</div><p class="skd">Supervised, unsupervised, and deep learning — from research to deployment.</p><div class="br-row"><span class="br-l">Deep Learning</span><span class="br-p">80%</span></div><div class="br"><div class="bf" data-w="80" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><div class="br-row"><span class="br-l">Model Training</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div><div class="skp"><span class="sp">PyTorch</span><span class="sp">TensorFlow</span><span class="sp">Keras</span><span class="sp">scikit-learn</span></div></div>
+      <div class="skc sk2 rv"><div class="ski" style="background:rgba(6,182,212,.1)">💬</div><div class="skn">NLP &amp; LLMs</div><p class="skd">Transformers, language models, sentiment analysis, and fine-tuning with LoRA.</p><div class="br-row"><span class="br-l">Transformers / BERT</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#06b6d4,#67e8f9)"></div></div><div class="br-row"><span class="br-l">LLM Fine-tuning</span><span class="br-p">65%</span></div><div class="br"><div class="bf" data-w="65" style="background:linear-gradient(90deg,#06b6d4,#67e8f9)"></div></div><div class="skp"><span class="sp">HuggingFace</span><span class="sp">spaCy</span><span class="sp">NLTK</span><span class="sp">LangChain</span></div></div>
+      <div class="skc sk3 rv"><div class="ski" style="background:rgba(245,158,11,.09)">🐍</div><div class="skn">Python &amp; Data Science</div><p class="skd">Clean Python code for AI systems, data pipelines, and APIs.</p><div class="br-row"><span class="br-l">Python</span><span class="br-p">85%</span></div><div class="br"><div class="bf" data-w="85" style="background:linear-gradient(90deg,#f59e0b,#fcd34d)"></div></div><div class="br-row"><span class="br-l">Data Science</span><span class="br-p">78%</span></div><div class="br"><div class="bf" data-w="78" style="background:linear-gradient(90deg,#f59e0b,#fcd34d)"></div></div><div class="skp"><span class="sp">NumPy</span><span class="sp">Pandas</span><span class="sp">Matplotlib</span><span class="sp">FastAPI</span></div></div>
+      <div class="skc sk4 rv"><div class="ski" style="background:rgba(236,72,153,.09)">👁️</div><div class="skn">Computer Vision</div><p class="skd">Object detection, image classification, and visual AI systems.</p><div class="br-row"><span class="br-l">Object Detection</span><span class="br-p">70%</span></div><div class="br"><div class="bf" data-w="70" style="background:linear-gradient(90deg,#ec4899,#f9a8d4)"></div></div><div class="br-row"><span class="br-l">OpenCV / YOLO</span><span class="br-p">68%</span></div><div class="br"><div class="bf" data-w="68" style="background:linear-gradient(90deg,#ec4899,#f9a8d4)"></div></div><div class="skp"><span class="sp">OpenCV</span><span class="sp">YOLO</span><span class="sp">PIL</span><span class="sp">ONNX</span></div></div>
+      <div class="skc sk5 rv"><div class="ski" style="background:rgba(16,185,129,.09)">🚀</div><div class="skn">Entrepreneurship</div><p class="skd">Founding and running Zyntho AI — strategy, product thinking, and execution.</p><div class="br-row"><span class="br-l">Product Thinking</span><span class="br-p">80%</span></div><div class="br"><div class="bf" data-w="80" style="background:linear-gradient(90deg,#10b981,#6ee7b7)"></div></div><div class="br-row"><span class="br-l">Client Management</span><span class="br-p">75%</span></div><div class="br"><div class="bf" data-w="75" style="background:linear-gradient(90deg,#10b981,#6ee7b7)"></div></div><div class="skp"><span class="sp">Vision</span><span class="sp">Leadership</span><span class="sp">Innovation</span><span class="sp">Growth</span></div></div>
+    </div>
+  </div>
+</section>
 
-        <a href="https://www.instagram.com/pep_poo_a" target="_blank" class="ic-box ib-ig">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-            <defs><linearGradient id="igG2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
-            <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#igG2)"/>
-            <circle cx="12" cy="12" r="5" stroke="url(#igG2)"/>
-            <circle cx="17.5" cy="6.5" r="1.5" fill="#dc2743"/>
-          </svg>
-          <div class="ic-tip">Instagram</div>
-        </a>
+<div class="divl"></div>
 
-        <a href="https://www.facebook.com/pep.poo.a.1425/" target="_blank" class="ic-box ib-fb">
-          <svg viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          <div class="ic-tip">Facebook</div>
-        </a>
-
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="si">
+    <div class="sec-head rv">
+      <p class="sl">Get In Touch</p>
+      <h2 class="st">Let's Build Something<br>Incredible Together</h2>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-left rv">
+        <div class="av-b"><div class="av-d"></div>Available for opportunities right now</div>
+        <p>Whether you are a <strong>company looking to integrate AI</strong>, an <strong>investor</strong> excited about intelligent systems, or a fellow developer who wants to collaborate — I am always open to a real conversation.</p>
+        <p>I am a Computing Science student at <strong>Griffith College Dublin</strong> and the CEO of <strong>Zyntho AI</strong>. I am open to internships, full-time roles, freelance AI projects, and strategic partnerships.</p>
+        <p>Let us make something the world has never seen before.</p>
+        <p class="contact-tagline">"Every line of code is a step forward."</p>
+        <button class="cta-big" onclick="openPopup()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Me a Message
+        </button>
+      </div>
+      <div class="connect-right rv">
+        <div class="connect-label">Connect With Me</div>
+        <div class="icon-row">
+          <a href="mailto:sanandynathgorick@gmail.com" class="ic-box ib-em">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+            <div class="ic-tip">Personal Email</div>
+          </a>
+          <a href="mailto:zynthoai04@gmail.com" class="ic-box ib-co">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+            <div class="ic-tip">Zyntho AI Email</div>
+          </a>
+          <a href="https://www.linkedin.com/in/gorick-nath-aigeek/" target="_blank" class="ic-box ib-li">
+            <svg viewBox="0 0 24 24" fill="#0a66c2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            <div class="ic-tip">LinkedIn</div>
+          </a>
+          <a href="https://github.com/gorickroot" target="_blank" class="ic-box ib-gh">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <div class="ic-tip">GitHub</div>
+          </a>
+          <a href="https://www.instagram.com/pep_poo_a" target="_blank" class="ic-box ib-ig">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+              <defs><linearGradient id="igG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#igG)"/><circle cx="12" cy="12" r="5" stroke="url(#igG)"/><circle cx="17.5" cy="6.5" r="1.5" fill="#dc2743"/>
+            </svg>
+            <div class="ic-tip">Instagram</div>
+          </a>
+          <a href="https://www.facebook.com/pep.poo.a.1425/" target="_blank" class="ic-box ib-fb">
+            <svg viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <div class="ic-tip">Facebook</div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div></section>
+</section>
 
-<!-- TAGLINE -->
+<!-- TAGLINE BAND -->
 <div class="tband">
   <div class="tband-t rv">"Every line of code is a step forward."</div>
   <div class="tband-sub">— Gorick Nath, Founder of Zyntho AI</div>
@@ -580,108 +816,140 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:1.75rem 3
 <!-- FOOTER -->
 <footer>
   <div class="fl">Designed &amp; built by <span>Gorick Nath</span> · Griffith College Dublin · Founder, Zyntho AI · Dublin, Ireland</div>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
   <div class="fr">© 2025 Gorick Nath. All rights reserved.</div>
 </footer>
 
 <script>
-/* Cursor */
+/* ═══════════════════════════════════
+   CURSOR
+═══════════════════════════════════ */
 const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-(function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;cur.style.left=mx+'px';cur.style.top=my+'px';curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+(function a(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  curR.style.left=rx+'px';curR.style.top=ry+'px';
+  requestAnimationFrame(a)})();
 document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';curR.style.width='74px';curR.style.height='74px';curR.style.borderColor='rgba(167,139,250,.5)'});
-  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';curR.style.width='54px';curR.style.height='54px';curR.style.borderColor='rgba(167,139,250,.3)'});
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';curR.style.width='72px';curR.style.height='72px';curR.style.borderColor='rgba(167,139,250,.5)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curR.style.width='48px';curR.style.height='48px';curR.style.borderColor='rgba(167,139,250,.35)'});
 });
 
-/* Shooting stars + twinkling stars */
-const sc=document.getElementById('shootCanvas');
+/* ═══════════════════════════════════
+   FLOATING PARTICLES
+═══════════════════════════════════ */
+const fp=document.getElementById('fp');
+const pColors=['rgba(124,58,237,','rgba(6,182,212,','rgba(236,72,153,','rgba(245,158,11,','rgba(16,185,129,'];
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.className='fpart';
+  const sz=Math.random()*4+2;
+  const col=pColors[Math.floor(Math.random()*pColors.length)];
+  const dur=Math.random()*20+15;
+  const delay=Math.random()*20;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${col}${Math.random()*.4+.1});animation-duration:${dur}s;animation-delay:-${delay}s;box-shadow:0 0 ${sz*3}px ${col}.4)`;
+  fp.appendChild(p);
+}
+
+/* ═══════════════════════════════════
+   STAR + SHOOTING STAR CANVAS
+═══════════════════════════════════ */
+const sc=document.getElementById('starCanvas');
 const sctx=sc.getContext('2d');
 let sw,sh;
-function rsz(){sc.width=sw=window.innerWidth;sc.height=sh=window.innerHeight}rsz();
-window.addEventListener('resize',rsz);
-
-/* Twinkling stars */
-const stars=Array.from({length:160},()=>({
+function rsz(){sc.width=sw=window.innerWidth;sc.height=sh=window.innerHeight}
+rsz();window.addEventListener('resize',rsz);
+const stars=Array.from({length:180},()=>({
   x:Math.random(),y:Math.random(),
-  r:Math.random()*1.4+.2,
+  r:Math.random()*1.5+.2,
   a:Math.random()*Math.PI*2,
   speed:Math.random()*.003+.001,
   col:Math.random()>.85?`rgba(200,180,255,`:`rgba(210,210,255,`
 }));
-
-/* Shooting stars pool */
 const shoots=[];
 function makeShoot(){
-  const startX=Math.random()*sw;
-  const startY=Math.random()*sh*.5;
-  const angle=Math.PI/4+Math.random()*.3;
-  shoots.push({x:startX,y:startY,len:Math.random()*120+60,speed:Math.random()*8+6,angle,life:1,decay:Math.random()*.012+.008});
+  shoots.push({x:Math.random()*sw,y:Math.random()*sh*.5,len:Math.random()*130+60,speed:Math.random()*9+6,angle:Math.PI/4+Math.random()*.3,life:1,decay:Math.random()*.012+.008});
 }
-setInterval(makeShoot,900);
-makeShoot();makeShoot();
-
-function drawAll(){
+setInterval(makeShoot,900);makeShoot();makeShoot();
+(function drawAll(){
   sctx.clearRect(0,0,sw,sh);
-  /* stars */
   stars.forEach(s=>{
     s.a+=s.speed;
     const al=(Math.sin(s.a)+1)*.5*.55+.05;
     sctx.beginPath();sctx.arc(s.x*sw,s.y*sh,s.r,0,Math.PI*2);
     sctx.fillStyle=s.col+al+')';sctx.fill();
   });
-  /* shooting stars */
-  shoots.forEach((sh2,i)=>{
-    sh2.x+=Math.cos(sh2.angle)*sh2.speed;
-    sh2.y+=Math.sin(sh2.angle)*sh2.speed;
-    sh2.life-=sh2.decay;
-    if(sh2.life<=0){shoots.splice(i,1);return;}
-    const tailX=sh2.x-Math.cos(sh2.angle)*sh2.len;
-    const tailY=sh2.y-Math.sin(sh2.angle)*sh2.len;
-    const grad=sctx.createLinearGradient(tailX,tailY,sh2.x,sh2.y);
-    grad.addColorStop(0,'rgba(255,255,255,0)');
-    grad.addColorStop(.4,`rgba(200,180,255,${sh2.life*.3})`);
-    grad.addColorStop(1,`rgba(255,255,255,${sh2.life*.9})`);
-    sctx.beginPath();sctx.moveTo(tailX,tailY);sctx.lineTo(sh2.x,sh2.y);
-    sctx.strokeStyle=grad;sctx.lineWidth=1.5;sctx.stroke();
-    /* head glow */
-    sctx.beginPath();sctx.arc(sh2.x,sh2.y,2,0,Math.PI*2);
-    sctx.fillStyle=`rgba(255,255,255,${sh2.life})`;sctx.fill();
+  shoots.forEach((s,i)=>{
+    s.x+=Math.cos(s.angle)*s.speed;s.y+=Math.sin(s.angle)*s.speed;s.life-=s.decay;
+    if(s.life<=0){shoots.splice(i,1);return;}
+    const tx=s.x-Math.cos(s.angle)*s.len,ty=s.y-Math.sin(s.angle)*s.len;
+    const g=sctx.createLinearGradient(tx,ty,s.x,s.y);
+    g.addColorStop(0,'rgba(255,255,255,0)');
+    g.addColorStop(.4,`rgba(200,180,255,${s.life*.3})`);
+    g.addColorStop(1,`rgba(255,255,255,${s.life*.9})`);
+    sctx.beginPath();sctx.moveTo(tx,ty);sctx.lineTo(s.x,s.y);
+    sctx.strokeStyle=g;sctx.lineWidth=1.5;sctx.stroke();
+    sctx.beginPath();sctx.arc(s.x,s.y,2,0,Math.PI*2);
+    sctx.fillStyle=`rgba(255,255,255,${s.life})`;sctx.fill();
   });
   requestAnimationFrame(drawAll);
-}drawAll();
+})();
 
-/* Scroll reveal */
+/* ═══════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════ */
 const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*70);obs.unobserve(e.target)}});
 },{threshold:.07});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-/* Skill bars */
+/* ═══════════════════════════════════
+   SKILL BARS
+═══════════════════════════════════ */
 const bobs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.bf').forEach(b=>{setTimeout(()=>{b.style.width=b.dataset.w+'%'},250)});bobs.unobserve(e.target)}});
 },{threshold:.15});
 document.querySelectorAll('.skc').forEach(el=>bobs.observe(el));
 
-/* Nav shrink */
-window.addEventListener('scroll',()=>{document.getElementById('nav').style.padding=window.scrollY>50?'.8rem 3.5rem':'1.1rem 3.5rem'});
+/* ═══════════════════════════════════
+   NAV SHRINK
+═══════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.padding=window.scrollY>50?'.75rem 3.5rem':'1.1rem 3.5rem';
+});
 
-/* Popup */
+/* ═══════════════════════════════════
+   MOBILE MENU
+═══════════════════════════════════ */
+function openMob(){document.getElementById('mobMenu').classList.add('open');document.getElementById('mobOverlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');document.getElementById('mobOverlay').classList.remove('open');document.body.style.overflow=''}
+
+/* ═══════════════════════════════════
+   POPUP — sends to mailto directly
+═══════════════════════════════════ */
 function openPopup(){document.getElementById('popup').classList.add('open');document.body.style.overflow='hidden'}
 function closePopup(){document.getElementById('popup').classList.remove('open');document.body.style.overflow=''}
 document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup()});
 
-/* Send message */
 function sendMsg(){
   const n=document.getElementById('mName').value.trim();
   const e=document.getElementById('mEmail').value.trim();
   const s=document.getElementById('mSubject').value.trim();
   const m=document.getElementById('mMsg').value.trim();
   if(!n||!e||!m){alert('Please fill in your name, email and message.');return;}
-  window.location.href=`mailto:sanandynathgorick@gmail.com?subject=${encodeURIComponent(s||'Message from '+n)}&body=${encodeURIComponent('Name: '+n+'\nEmail: '+e+'\n\n'+m)}`;
+  const body=`Name: ${n}\nEmail: ${e}\n\n${m}`;
+  const subject=s||`Portfolio Message from ${n}`;
+  /* Opens user's mail client — email goes to BOTH addresses */
+  window.location.href=`mailto:sanandynathgorick@gmail.com,zynthoai04@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   document.getElementById('msgOk').style.display='block';
   ['mName','mEmail','mSubject','mMsg'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(closePopup,3000);
 }
 </script>
 </body>
