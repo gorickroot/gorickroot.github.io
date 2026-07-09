@@ -3,7 +3,7 @@
 Personal portfolio website Gorick Nath, Computing Science student at Griffith College Dublin and Founder & CEO of Zyntho AI.
 
 ## 🔗 Live Site
-https://gorickroot.github.io/
+[https://gorickroot.github.io/](https://gorickroot.github.io/)
 
 ## 👨‍💻 About
 - 🎓 Computing Science Student — Griffith College Dublin, Ireland
