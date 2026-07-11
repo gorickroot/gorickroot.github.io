@@ -4,6 +4,7 @@ Personal portfolio website Gorick Nath, Computing Science student at Griffith Co
 
 ## 🔗 Live Site
 (https://gorick-nath.vercel.app/)
+(https://gorickroot.github.io/)
 
 ## 👨‍💻 About
 - 🎓 Computing Science Student — Griffith College Dublin, Ireland
