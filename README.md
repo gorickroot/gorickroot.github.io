@@ -82,7 +82,7 @@ An internet connection is needed for the fonts and animation libraries, which lo
 
 ## 🌐 Deployment
 
-- **GitHub Pages:** serves `index.html` from the `main` branch root at [gorickroot.github.io/portfolio](https://gorickroot.github.io/portfolio/)
+- **GitHub Pages:** serves `index.html` from the `main` branch root at [gorickroot.github.io/portfolio](https://gorickroot.github.io/)
 - **Vercel:** imports this repo with the "Other" preset and no build command, at [gorick-nath.vercel.app](https://gorick-nath.vercel.app/)
 
 Both update automatically on every push to `main`.
