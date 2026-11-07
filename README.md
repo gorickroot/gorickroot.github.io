@@ -5,7 +5,7 @@
 **AI/ML Engineer · Founder & CEO of Zyntho AI · Computing Science at Griffith College Dublin**
 
 [![Live on Vercel](https://img.shields.io/badge/Live-gorick--nath.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://gorick-nath.vercel.app/)
-[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-gorickroot.github.io%2Fportfolio-181717?style=for-the-badge&logo=github&logoColor=white)](https://gorickroot.github.io/portfolio/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-gorickroot.github.io%2Fportfolio-181717?style=for-the-badge&logo=github&logoColor=white)](https://gorickroot.github.io/)
 
 <img src="assets/preview.jpg" alt="Portfolio hero: 'Engineering intelligence that actually works.' over a molten orange WebGL orb" width="100%">
 
