@@ -6,25 +6,31 @@
 
 AI/ML Engineer · Founder of **Zyntho AI** · Computing Science @ Griffith College Dublin
 
-[![Live](https://img.shields.io/badge/▶_Visit_the_site-FF6A1F?style=for-the-badge)](https://gorickroot.github.io/portfolio/)
+[![Live](https://img.shields.io/badge/▶_Visit_the_site-FF6A1F?style=for-the-badge)](https://gorickroot.github.io/)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://gorick-nath.vercel.app/)
 
-<img src="assets/preview.jpg" alt="Portfolio hero: 'Engineering intelligence that actually works.' over a molten orange orb" width="100%">
+<img src="preview.jpg" alt="Portfolio hero: 'Engineering intelligence that actually works.' over a molten orange orb" width="100%">
 
 </div>
 
 ---
 
-### 🔥 Inside
+### 🔥 What's inside
 
-A molten WebGL orb that follows your cursor · a scroll-driven project reel · a live world clock that knows your time zone (and Dhaka's 🇧🇩) · words that light up as you read.
+| | |
+|---|---|
+| 🌋 **Molten hero** | A live WebGL orb that bends toward your cursor |
+| 🎞️ **Project reel** | Work slides sideways as you scroll |
+| 🕒 **World clock** | Knows your time zone, and always shows Dublin and Dhaka |
+| ✨ **Living text** | Words light up as you read them |
+| 📱 **Any screen** | From an iPhone SE to a 4K monitor |
 
-**One file, zero build steps:** HTML, CSS, JS, GSAP and Lenis, tested from an iPhone SE up to a 4K desk.
+> One `index.html`. No build step. Just HTML, CSS, JavaScript, GSAP and Lenis.
 
 ### ⚡ Run it
 
 ```bash
-git clone https://github.com/gorickroot/portfolio.git && open portfolio/index.html
+git clone https://github.com/gorickroot/gorickroot.github.io.git && open gorickroot.github.io/index.html
 ```
 
 ### 🌍 The path so far
@@ -44,6 +50,6 @@ git clone https://github.com/gorickroot/portfolio.git && open portfolio/index.ht
 
 *Patience → Progress → Perfection → Success*
 
-<sub>© 2026 Gorick Nath · All rights reserved</sub>
+<sub>© 2026 Gorick Nath</sub>
 
 </div>
