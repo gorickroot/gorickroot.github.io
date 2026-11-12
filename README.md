@@ -9,7 +9,6 @@ AI/ML Engineer · Founder of **Zyntho AI** · Computing Science @ Griffith Colle
 [![Live](https://img.shields.io/badge/▶_Visit_the_site-FF6A1F?style=for-the-badge)](https://gorickroot.github.io/)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://gorick-nath.vercel.app/)
 
-<img src="preview.jpg" alt="Portfolio hero: 'Engineering intelligence that actually works.' over a molten orange orb" width="100%">
 
 </div>
 
